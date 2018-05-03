@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:409-HF300102 宵月地下水路 -->
+<field>
+
+	<warpgate id="2" x="6550" y="17449" shell="14" idCli="292" dir="0" idDestField="162" xDest="39" yDest="84"/>
+	<warpgate id="3" x="1650" y="12449" shell="14" idCli="294" dir="0" idDestField="410" xDest="52" yDest="59"/>
+</field>

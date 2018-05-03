@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:396-HF100305 災厄の森 -->
+<field>
+	<!-- 災厄の森→ミュータントフラワー -->
+	<warpgate id="2" x="3150" y="6150" shell="30" idCli="54" dir="6" idDestField="394" xDest="83" yDest="62"/>
+	<!-- 災厄の森→オオカミの森 -->
+	<warpgate id="3" x="7699" y="7771" shell="30" idCli="49" dir="5" idDestField="397" xDest="59" yDest="63"/>
+</field>

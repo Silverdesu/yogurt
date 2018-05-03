@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:391-HF100206 ほこりだらけの図書館 -->
+<field>
+	<!-- ほこりだらけの図書館→世界樹の根の迷路 -->
+	<warpgate id="2" x="4700" y="849" shell="13" idCli="243" dir="0" idDestField="388" xDest="23" yDest="60"/>
+</field>

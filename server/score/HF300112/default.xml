@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:419-HF300112 クロコの部屋 -->
+<field>
+
+	<warpgate id="2" x="5650" y="11250" shell="16" idCli="316" dir="6" idDestField="412" xDest="69" yDest="42"/>
+	<warpgate id="3" x="10150" y="17149" shell="16" idCli="305" dir="0" idDestField="420" xDest="18" yDest="93"/>
+	<warpgate id="5" x="9650" y="11949" shell="16" idCli="318" dir="0" idDestField="421" xDest="22" yDest="63"/>
+</field>

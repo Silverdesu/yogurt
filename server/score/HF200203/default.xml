@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:401-HF200203 納骨堂 -->
+<field>
+	<!-- 納骨堂→分かれ道 -->
+	<warpgate id="2" x="5450" y="5349" shell="44" idCli="609" dir="0" idDestField="399" xDest="92" yDest="128"/>
+</field>

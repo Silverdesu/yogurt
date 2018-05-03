@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:427-HF100403 さまよえる 4次元教室 -->
+<field>
+	<!-- さまよえる 4次元教室→逆世界樹 -->
+	<warpgate id="2" x="7150" y="6349" shell="50" idCli="252" dir="0" idDestField="426" xDest="86" yDest="111"/>
+	<!-- さまよえる 4次元教室→失われた教室 -->
+	<warpgate id="3" x="4250" y="1349" shell="50" idCli="254" dir="0" idDestField="428" xDest="24" yDest="96"/>
+</field>

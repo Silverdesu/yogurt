@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:417-HF300110 秘密の近道 -->
+<field>
+
+	<warpgate id="2" x="650" y="5849" shell="16" idCli="249" dir="0" idDestField="410" xDest="38" yDest="15"/>
+	<warpgate id="3" x="6050" y="1849" shell="16" idCli="255" dir="0" idDestField="418" xDest="30" yDest="39"/>
+</field>

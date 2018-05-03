@@ -1,0 +1,925 @@
+■スコアとは
+	Quartet上で動くオブジェクト(ワープゲート、NPCなど)を定義したファイル。
+	XMLで記述する。
+
+■スコア(xmlファイル)の作成
+	1.Field.txtを参考に作成したいマップのcodeを調べる。
+	2.scoreフォルダの中にcodeと同じフォルダを作る。
+	3.作成したフォルダの中に「任意の名称.xml」としたファイルを作る。
+	　npc.xmlみたいな名前だと被りまくる恐れがあるので、前後に自分の名前でも加えておく。
+	　(ex. score\SF001001\lyna_npc.xml)
+	4.作成したxmlファイルの中に以下の内容をコピーし保存する。
+---------------↓ここから↓---------------
+<?xml version="1.0" encoding="Shift_JIS"?>
+<field>
+</field>
+---------------↑ここまで↑---------------
+
+■スコアライブラリとは
+	NPCスクリプトの命令をひとまとめとした「関数」を定義したファイル。
+	XMLで記述する。
+
+■スコアライブラリの作成
+	1.scoreフォルダ内のlibフォルダ下に「任意の名称.xml」としたファイルを作る。
+	　必ず他と被らないような名称をつける。今後の仕様変更も踏まえ、アルファベットのみが望ましい。
+	　(ex. score\lib\lyna.xml)
+	2.作成したxmlファイルの中に以下の内容をコピーし保存する。
+---------------↓ここから↓---------------
+<?xml version="1.0" encoding="Shift_JIS"?>
+<library>
+</library>
+---------------↑ここまで↑---------------
+
+■スコア(スコアライブラリ)でのルール
+	・属性(<tag attribute="value">)は子要素(<tag><attribute>value</attribute></tag>)で代用できる。
+	・属性と子ノードに同じ名前がある場合は属性の値を優先する。
+
+■システムイベントとは
+	特定の条件時にスコアライブラリ内の関数を呼び出す機能。
+	関数はすべてscore\lib\system.xml内に記述する。
+
+■システムイベントの種類
+	【onlogin】
+		キャラクターがログインしたときに呼び出される関数。
+		
+		・サンプル
+			<function name="onlogin">
+				<sysmsg text="チャット欄で/listと打つことでコマンド一覧を表示します."/>
+			</function>
+
+	【onmakechar】
+		キャラクターが作成されたときに呼び出される関数。
+		addbeitemのequip属性や、専用命令のmoveが使用可能。
+		
+		・サンプル
+			<function name="onmakechar">
+				<move field="1" x="76" y="104"/>
+				<addbeitem type="110001" equip="true"/>
+			</function>
+
+■通販について
+	scoreフォルダ内のSpecialPhone.xmlで定義する。
+	1つ目のnpcタグがNo.2(0700-2222)に、
+	2つ目のnpcタグがNo.27(0700-2727)にそれぞれ対応する。
+	npcタグの仕様についてはスコアと同様。
+
+■簡易構造定義
+<field>
+  <warpgate/>
+  <episodegate>
+    <episode/>
+  </episodegate>
+  <vmachine>
+    <product/>
+  </vmachine>
+  <locker/>
+  <hairdresser/>
+  <npc>
+    <dialog>
+      <selection/>
+    </dialog>
+    <buy>
+      <beitem/>
+      <coitem/>
+      <enitem/>
+    </buy>
+    <sell/>
+    <crystal/>
+    <attachstone/>
+    <detachstone/>
+    <breakstone/>
+    <buyskill>
+      <skill/>
+    </buyskill>
+    <message/>
+    <warp/>
+    <bus/>
+    <script>
+      <ifeq/>
+      <ifne/>
+      <ifge/>
+      <ifle/>
+      <ifdef/>
+      <ifndef/>
+      <else/>
+      <set/>
+      <add/>
+      <sub/>
+      <mul/>
+      <div/>
+      <mod/>
+      <inc/>
+      <dec/>
+      <rnd/>
+      ...
+    </script>
+    ...
+  </npc>
+</field>
+
+<library>
+  <function>
+    <ifeq/>
+    <ifne/>
+    ...
+  </function>
+</library>
+
+■タグ詳細
+
+【warpgate】
+	ワープゲートを設置する。複数設置可。
+
+	・サンプル
+		<warpgate id="1" x="12400" y="17249" shell="96" idCli="2727" dir="0" idDestField="92" xDest="55" yDest="28"/>
+
+	・属性詳細
+	[id]
+		識別番号。他のwarpgateと被らない数値にする。
+	[x]
+		X座標。実際の座標に100をかけたもの。
+	[y]
+		Y座標。実際の座標に100をかけたもの。
+	[shell]
+		見た目の指定。パケットログから取得する。
+	[idCli]
+		用途不明。パケットログから取得する。
+	[dir]
+		向き。
+	[idDestField]
+		移動先フィールドID。Field.txt参照。
+	[xDest]
+		移動先X座標。
+	[yDest]
+		移動先Y座標。
+
+【episodegate】
+	エピソードゲートを設置する。複数設置可。
+
+	・サンプル
+		<episodegate subid="20101" idCli="945" shell="99" x="93.5" y="150.5" dir="2" visible="1" usable="1">
+
+	・属性詳細
+	[subid]
+		Lobby.txtのsubid。
+	[idCli]
+		用途不明。パケットログから取得する。
+	[shell]
+		見た目の指定。パケットログから取得する。
+	[x]
+		X座標。
+	[y]
+		Y座標。
+	[dir]
+		向き。
+	[visible=1]
+		0で不可視、1で可視。省略可(default=1)。
+	[usable=1]
+		0で使用不可(灰色に)、1で使用可。省略可(default=1)。
+
+【episodegate->episode】
+	エピソードを定義する。複数記述可。
+
+	・サンプル
+		<episode id="69" grade="1"/>
+
+	・属性詳細
+	[id]
+		エピソード番号。Episode.txt参照。
+	[grade]
+		プレイ可能な学年。
+
+【vmachine】
+	カプセル販売機を設置する。複数設置可。
+
+	・サンプル
+		<vmachine totalAmount="100" price="500" subid="206" idCli="157" shell="42" x="46.5" y="43.7" dir="0" visible="1" usable="1">
+
+	・属性詳細
+	[totalAmount]
+		保有カプセル数。
+	[price]
+		1回の価格。
+	[subid]
+		内部ID。パケットログから取得する。
+	[idCli]
+		用途不明。パケットログから取得する。
+	[shell]
+		見た目の指定。パケットログから取得する。
+	[x]
+		X座標。
+	[y]
+		Y座標。
+	[dir]
+		向き。
+	[visible=1]
+		0で不可視、1で可視。省略可(default=1)。
+	[usable=1]
+		0で使用不可(灰色に)、1で使用可。省略可(default=1)。
+
+【vmachine->product】
+	カプセル販売機で販売するアイテムを定義する。複数記述可。
+
+	・サンプル
+		<product type="60016" amount="10" secret="false"/>
+
+	・属性詳細
+	[type]
+		消費系アイテムタイプを指定する。CoItemType.txt参照。
+	[amount]
+		入手個数。
+	[secret]
+		シークレット表示にする。
+		0と1、falseとtrueのどちらでも可。
+
+【locker】
+	ロッカーを設置する。複数設置可。
+
+	・サンプル
+		<locker subid="102" idCli="102" shell="43" x="54.5" y="57.5" dir="0" visible="1" usable="1"/>
+
+	・属性詳細
+	[subid]
+		用途不明。パケットログから取得する。
+	[idCli]
+		用途不明。パケットログから取得する。
+	[shell]
+		見た目の指定。43固定？
+	[x]
+		X座標。
+	[y]
+		Y座標。
+	[dir]
+		向き。
+	[visible=1]
+		0で不可視、1で可視。省略可(default=1)。
+	[usable=1]
+		0で使用不可(灰色に)、1で使用可。省略可(default=1)。
+
+【hairdresser】
+	ヘアドレッサーを設置する。複数設置可。
+
+	・サンプル
+		<hairdresser subid="324" idCli="324" shell="101" x="89" y="198" dir="2" visible="1" usable="1"/>
+
+	・属性詳細
+	[subid]
+		用途不明。パケットログから取得する。
+	[idCli]
+		用途不明。パケットログから取得する。
+	[shell]
+		見た目の指定。101固定？
+	[x]
+		X座標。
+	[y]
+		Y座標。
+	[dir]
+		向き。
+	[visible=1]
+		0で不可視、1で可視。省略可(default=1)。
+	[usable=1]
+		0で使用不可(灰色に)、1で使用可。省略可(default=1)。
+
+【npc】
+	NPCを設置する。複数設置可。
+
+	・サンプル
+		<npc id="171" shell="51" x="115" y="169" dir="3" init="init">
+
+	・属性詳細
+	[id]
+		NPC番号。NpcEx.txtのid参照。
+	[shell]
+		見た目の指定。基本的にNpcEx.txtのcutinと同じで良い。
+	[x]
+		X座標。
+	[y]
+		Y座標。
+	[dir]
+		向き。
+	[init]
+		開始ラベル名。通常はdialogタグのname属性値を指定する。
+
+【npc->dialog】
+	会話ダイアログを定義する。複数記述可。
+
+	・サンプル
+		<dialog name="init" cutin="0" timeout="0" choiceontimeout="0" closebutton="1" bgframeclick="0" text="こんにちは">
+		<dialog npcid="519" name="megadeath" cutin="0" closebutton="1">
+
+	・属性詳細
+	[npcid]
+		NPC番号。npcタグのid属性と同じもの。省略可。
+		省略するとnpcタグで指定した番号が設定される。
+		npcタグで指定したNPCとは違う立ち絵を表示させたい場合に使う。
+	[name]
+		ラベル名。
+		dialogのinit属性やselectionタグのnext属性などで使用するため、他と重複しない名前にする。
+	[cutin]
+		立ち絵を指定する。基本は0だが、1以降が使えるNPCもある。変数指定可(${varname}形式)。
+	[timeout=0]
+		省略可(default=0)。
+	[choiceontimeout=0]
+		省略可(default=0)。
+	[closebutton=0]
+		右上の閉じるボタンの状態を制御する。0で無効、1で有効。省略可(default=0)。
+	[bgframeclick=0]
+		背景をクリックすることで進むかどうかを制御する。0で無効、1で有効。省略可(default=0)。
+	[text]
+		表示するテキストを指定する。fontタグ、brタグが使用可能。
+		変数を含めた場合、展開して表示する。変数は${変数名}のように書く。
+		使用する際は以下のように属性を子要素で代用した方が良い。
+		<text><![CDATA[
+		  <font color="00FFFF">エミュ</font>はどうやってやるのか分かったかな？<br>
+		  うん、それじゃ、楽しい学校生活をね。デバッグ用: ${temp}回目の表示。<br>
+		]]></text>
+
+【npc->dialog->selection】
+	会話ダイアログの選択肢を定義する。1つのdialogに対し最低1つは必須。複数記述可(3つまで)。
+
+	・サンプル
+		<selection next="command" text="コマンドについて教えて下さい" />
+		<selection next="nana_janken_judge" text="${temp}" op="set" varname="hand" value="0" />
+
+	・属性詳細
+	[next=""]
+		次に進むダイアログ等へのラベル名を指定する。省略するとNPCとの会話が終了する。
+	[text]
+		選択肢として表示するテキストを指定する。
+		変数の埋め込みが可能。
+	[op=""]
+		選んだ際に実行する処理を指定。省略可。
+			set->valueの値を変数に代入する。
+			inc->変数の値を+1する。
+			dec->変数の値を-1する。
+	[varname]
+		処理で使用する変数名を指定する。opが指定されている場合は必須。
+	[value]
+		値を指定する。変数指定可(${}を使用)。opが指定されていてsetの場合のみ必須。
+
+【npc->buy】
+	アイテム購入画面を表示する。
+
+	・サンプル
+		<buy name="buy_normal">
+
+	・属性詳細
+	[name]
+		ラベル名。
+
+【npc->buy->beitem】
+	アイテム購入画面で表示する装備系アイテムを定義する。複数記述可。
+
+	・サンプル
+		<beitem type="110006" price="100" />
+
+	・属性詳細
+	[type]
+		装備系アイテムタイプを指定する。BeItemType.txt参照。
+	[price]
+		価格を指定する。
+
+【npc->buy->coitem】
+	アイテム購入画面で表示する消費系アイテムを定義する。複数記述可。
+
+	・サンプル
+		<coitem type="10001" price="50" />
+
+	・属性詳細
+	[type]
+		消費系アイテムタイプを指定する。CoItemType.txt参照。
+	[price]
+		価格を指定する。
+
+【npc->buy->enitem】
+	アイテム購入画面で表示する強化系アイテムを定義する。複数記述可。
+
+	・サンプル
+		<enitem type="10001" price="500" />
+
+	・属性詳細
+	[type]
+		強化系アイテムタイプを指定する。EnItemType.txt参照。
+	[price]
+		価格を指定する。
+
+【npc->sell】
+	アイテム売却画面を表示する。
+
+	・サンプル
+		<sell name="sell" />
+
+	・属性詳細
+	[name]
+		ラベル名。
+
+【npc->crystal】
+	結晶精製画面を表示する。
+
+	・サンプル
+		<crystal name="crystal" />
+
+	・属性詳細
+	[name]
+		ラベル名。
+
+【npc->attachstone】
+	源石装着画面を表示する。
+
+	・サンプル
+		<attachstone name="attach" />
+
+	・属性詳細
+	[name]
+		ラベル名。
+
+【npc->detachstone】
+	源石解除画面を表示する。
+
+	・サンプル
+		<detachstone name="detach" />
+
+	・属性詳細
+	[name]
+		ラベル名。
+
+【npc->breakstone】
+	源石破壊画面を表示する。
+
+	・サンプル
+		<breakstone name="break" />
+
+	・属性詳細
+	[name]
+		ラベル名。
+
+【npc->buyskill】
+	スキル購入画面を表示する。
+
+	・サンプル
+		<buyskill name="skill_normal">
+
+	・属性詳細
+	[name]
+		ラベル名。
+
+【npc->buyskill->skill】
+	スキル購入画面で表示するスキルを定義する。複数記述可。
+
+	・サンプル
+		<skill type="21001" price="50" />
+
+	・属性詳細
+	[type]
+		スキルタイプを指定する。SkillDesc.txt参照。
+	[price]
+		価格を指定する。
+
+【npc->message】
+	画面中央にメッセージを表示する。
+
+	・サンプル
+		<message text="○○をあつめよう！" />
+
+	・属性詳細
+	[text]
+		表示するテキストを指定する。変数の埋め込みが可能。
+
+【npc->warp】
+	キャラクターを指定の座標に移動させる。
+
+	・サンプル
+		<warp name="warp" idDestField="90" xDest="127" yDest="166" />
+
+	・属性詳細
+	[name]
+		ラベル名。
+	[idDestField]
+		移動先フィールドID。Field.txt参照。
+	[xDest]
+		移動先X座標。
+	[yDest]
+		移動先Y座標。
+
+【npc->bus】
+	バス移動デモを表示し、キャラクターを指定の座標に移動させる。
+
+	・サンプル
+		<bus name="bus" school="2" idDestField="90" xDest="127" yDest="166" />
+
+	・属性詳細
+	[name]
+		ラベル名。
+	[school]
+		表示するデモを指定する。1でエスティバー用、2で宵月用のバス移動デモ。
+	[idDestField]
+		移動先フィールドID。Field.txt参照。
+	[xDest]
+		移動先X座標。
+	[yDest]
+		移動先Y座標。
+
+【npc->script】
+	変数や分岐などを使った処理を記述する。複数記述可。
+	scriptタグ内に書かれた処理は上から順次実行される。
+
+	・サンプル
+		<script name="nana1">
+
+	・属性詳細
+	[name]
+		ラベル名。
+
+【npc->script->ifeq】
+【npc->script->ifne】
+【npc->script->ifge】
+【npc->script->ifle】
+【npc->script->ifdef】
+【npc->script->ifndef】
+	条件を満たした場合に内部の命令を実行する。
+		ifeq…変数の値とValueが同じ値か。
+		ifne…変数の値とValueが違う値か。
+		ifge…変数の値がValue以上(>=)か。
+		ifle…変数の値がValue以下(<=)か。
+		ifdef…変数が定義済みか(setタグの使用で定義済みとする)。
+		ifndef…変数が未定義か。
+
+	・サンプル(旧仕様。参考のために掲載)
+		<ifeq varname="lyna.nana.first" value="1" truelabel="nana1" falselabel="nana2"/>
+		<ifeq varname="lyna.nana.first" value="${lyna.nana.value}" truelabel="nana1" falselabel="nana2"/>
+		<ifdef varname="lyna.nana.first" truelabel="nana1"/>
+
+	・サンプル(新仕様。上記を書き換えるとこうなる)
+		<ifeq varname="lyna.nana.first" value="1">
+			<jump label="nana1"/>
+		</ifeq>
+		<jump label="nana2"/>
+		
+		<ifeq varname="lyna.nana.first" value="${lyna.nana.value}"/>
+			<jump label="nana1"/>
+		</ifeq>
+		<jump label="nana2"/>
+		
+		<ifdef varname="lyna.nana.first"/>
+			<jump label="nana1"/>
+		</ifdef>
+
+	・属性詳細
+	[varname]
+		比較する変数名。
+	[value]
+		比較する値。整数値と変数が指定できる。
+		変数を指定する場合は${変数名}と書く。
+		ifdefとifndefでは使用しない。
+
+【npc->script->ifbeitem】
+【npc->script->ifcoitem】
+【npc->script->ifenitem】
+	条件を満たした場合に内部の命令を実行する。
+		ifbeitem…指定したBeItemを持っているか。
+		ifcoitem…指定したCoItemを指定した数だけ持っているか。
+		ifenitem…指定したEnItemを指定した数だけ持っているか。
+
+	・サンプル
+		<ifbeitem type="110001">
+			<jump label="nana1"/>
+		</ifbeitem>
+		<ifcoitem type="10005" amount="10">
+			<jump label="nana1"/>
+		</ifcoitem>
+
+	・属性詳細
+	[type]
+		(be,co,en共通)アイテムの種類。
+		詳しくはそれぞれBeItemType.txt、CoItemType.txt、EnItemType.txtを参照。
+		整数値と変数が指定でき、変数を指定する場合は${変数名}と書く。
+	[amount]
+		(co,enのみ)アイテムの個数。
+		整数値と変数が指定でき、変数を指定する場合は${変数名}と書く。
+
+【npc->script->else】
+	if系命令の直後に存在しif系命令の条件を満たさなかった場合に内部の命令を実行する。
+	if系命令以外の場所に記述した場合は中身ごと無視される。
+
+	・サンプル
+		<ifeq varname="lyna.nana.first" value="1">
+			<jump label="nana1"/>
+		</ifeq>
+		<else>
+			<jump label="nana2"/>
+		</else>
+
+	・属性詳細
+		属性なし
+
+【npc->script->addbeitem】
+【npc->script->addcoitem】
+【npc->script->addenitem】
+【npc->script->delbeitem】
+【npc->script->delcoitem】
+【npc->script->delenitem】
+	アイテムを入手、もしくは消去する。
+	消去する場合はifbeitemなどで所持していることを必ず確認すること。
+
+	・サンプル
+		<addbeitem type="110001"/>
+		<delcoitem type="10005" amount="${local.count}"/>
+
+	・属性詳細
+	[type]
+		(be,co,en共通)アイテムの種類。
+		詳しくはそれぞれBeItemType.txt、CoItemType.txt、EnItemType.txtを参照。
+		整数値と変数が指定でき、変数を指定する場合は${変数名}と書く。
+	[amount]
+		(co,enのみ)入手、もしくは消去するアイテムの個数。
+		整数値と変数が指定でき、変数を指定する場合は${変数名}と書く。
+	[equip]
+		(addbeitemのみ)trueを指定した場合に入手したアイテムをそのまま装備する。
+		false、もしくは省略した場合は装備しない。
+		指定値は0と1、falseとtrueのどちらでも可。
+		onmakechar関数内でのみ使用可能であり、その他の場合は無視される。
+
+【npc->script->set】
+	変数に値を設定する。
+	スクリプターによって変数名が被らないよう、
+	変数名にはスクリプターの名前などを接頭辞として付けることを推奨する。
+	また、将来的な仕様変更に備え、区切りには.(ドット)の使用を推奨する。
+
+	・サンプル
+		<set varname="lyna.nana.first" value="1"/>
+		<set varname="lyna.nana.echo" value="わはー"/>
+
+	・属性詳細
+	[varname]
+		変数名。
+	[value]
+		代入する値。整数値と文字列、変数が指定できる。
+		変数を指定する場合は${変数名}と書く。
+
+【npc->script->add】
+【npc->script->sub】
+【npc->script->mul】
+【npc->script->div】
+【npc->script->mod】
+	変数に対して演算を行う。
+		add…足し算を行う。
+		sub…引き算を行う。
+		mul…掛け算を行う。
+		div…割り算を行う。
+		mod…割った余りを求める。
+
+	・サンプル
+		<add varname="lyna.counter" value="2"/>
+
+	・属性詳細
+	[varname]
+		変数名。
+	[value]
+		演算に使われる値。整数値と変数が指定できる。
+		変数を指定する場合は${変数名}と書く。
+		例えばaddならば変数にvalueを足した値が再びvarnameの変数に代入される。
+
+【npc->script->inc】
+【npc->script->dec】
+	inc…変数の値を1増やす。
+	dec…変数の値を1減らす。
+
+	・サンプル
+		<inc varname="lyna.counter"/>
+
+	・属性詳細
+	[varname]
+		変数名。
+
+【npc->script->rnd】
+	ランダムな値を変数に代入する。
+
+	・サンプル
+		<rnd varname="lyna.kuji" value="10"/>
+
+	・属性詳細
+	[varname]
+		変数名。
+	[value]
+		ランダム値の範囲。整数値と変数が指定できる。0～value-1を返す。
+		例えば10を指定した場合は0～9の値がランダムで返される。
+
+【npc->script->getcharinfo】
+	任意のキャラクター情報を取得し変数に代入する。
+
+	・サンプル
+		<getcharinfo varname="local.name" type="name"/>
+		<getcharinfo varname="local.level" type="level"/>
+
+	・属性詳細
+	[varname]
+		変数名。
+	[type]
+		取得する情報の種類を指定する。
+			name   -> キャラクター名
+			grade  -> 学年(1～6)
+			blood  -> 血液型(1～4)
+			taff   -> 所持金
+			school -> 学校(1 or 2)
+			sex    -> 性別(1 or 2)
+			level  -> レベル(1～300)
+			hp     -> HP
+			maxhp  -> 最大HP
+			exp    -> 経験値
+			maxexp -> 最大経験値
+
+【npc->script->setcharinfo】
+	任意のキャラクター情報を変更する。
+
+	・サンプル
+		<setcharinfo type="taff" value="100"/>
+		<setcharinfo type="hp" value="1"/>
+
+	・属性詳細
+	[type]
+		変更する情報の種類を指定する。
+			grade  -> 学年
+			taff   -> 所持金
+			hp     -> HP
+			exp    -> 経験値
+	[varname]
+		設定する値。
+
+【npc->script->getsysinfo】
+	任意のシステム情報を取得し変数に代入する。
+
+	・サンプル
+		<getsysinfo varname="local.clock" type="clock"/>
+		<getsysinfo varname="local.player" type="player"/>
+
+	・属性詳細
+	[varname]
+		変数名。
+	[type]
+		取得する情報の種類を指定する。
+			clock  -> ゲーム内時刻(0～3, 3が夜)
+			player -> 接続人数
+
+【npc->script->setsysinfo】
+	任意のシステム情報を変更する。
+
+	・サンプル
+		<setsysinfo type="clock" value="3"/>
+
+	・属性詳細
+	[type]
+		変更する情報の種類を指定する。
+			clock  -> ゲーム内時刻(0～3, 3が夜)
+	[value]
+		設定する値。
+
+【npc->script->getdatetime】
+	日時を取得し変数に代入する。
+
+	・サンプル
+		<getdatetime type="month" varname="local.month"/>
+
+	・属性詳細
+	[type]
+		取得する日時の種類を指定する。
+			year   -> 年
+			month  -> 月
+			day    -> 日
+			hour   -> 時
+			minute -> 分
+			second -> 秒
+	[varname]
+		変数名。
+
+【npc->script->switch】
+	変数の値によって処理を分岐する。
+
+	・サンプル
+		<switch varname="lyna.counter">
+
+	・属性詳細
+	[varname]
+		変数の名前。
+
+【npc->script->case】
+	switchによって分岐する条件を指定する。
+	switchで指定した変数の値とvalueの値が同じであれば、内部の命令を実行する。
+
+	・サンプル
+		<case value="1">
+			...
+		</case>
+
+	・属性詳細
+	[value]
+		比較する値。整数値と変数が指定できる。
+
+【npc->script->call】
+	指定した名前の関数を実行する。
+
+	・サンプル
+		<call name="lyna.nana.janken.init"/>
+		<call name="${lyna.nana.next}"/>
+
+	・属性詳細
+	[name]
+		関数名。文字列値と変数が指定できる。変数を指定する場合は${変数名}と書く。
+		名前の先頭にはファイル名と.(ドット)が必要。
+		(例えば関数が定義してあるのがlyna.xmlで、呼び出す関数がfuncなら、name="lyna.func"とする)
+
+【npc->script->jump】
+	指定したラベル名にジャンプする。
+
+	・サンプル
+		<jump label="nana3"/>
+		<jump label="${lyna.jumpnext}">
+
+	・属性詳細
+	[label]
+		ジャンプ先のラベル名。文字列値と変数が指定できる。
+		変数を指定する場合は${変数名}と書く。
+
+【npc->script->sysmsg】
+	システムメッセージを送信する。
+
+	・サンプル
+		<sysmsg text="チャット欄で/listと打つことでコマンド一覧を表示します."/>
+
+	・属性詳細
+	[global]
+		この値がtrueの場合、全体にメッセージを送信する。
+		false、もしくは省略した場合は対象のキャラのみに送る。
+		指定値は0と1、falseとtrueのどちらでも可。
+
+【npc->script->debug】
+	デバッグ出力する。
+
+	・サンプル
+		<debug text="今の値は${temp}です。"/>
+
+	・属性詳細
+	[text]
+		npc->dialogタグのtext属性と同等。
+
+【npc->script->bgm】
+【npc->script->se】
+	指定したサウンドを鳴らす。
+
+	・サンプル
+		<bgm value="19"/>
+		<se value="${number}"/>
+
+	・属性詳細
+	[value]
+		サウンド番号。
+		bgmの場合はMatchingBGM.txt、seの場合はMatchingSound.txtを参照。
+
+【npc->script->save】
+	戦闘不能時の復帰位置を指定する。位置情報はsaveコマンドと共有。
+
+	・サンプル
+		<save field="91" x="113" y="123" />
+
+	・属性詳細
+	[field]
+		フィールドID。Field.txt参照。
+	[X]
+		フィールド内でのX座標。
+	[Y]
+		フィールド内でのY座標。
+
+【function】
+	関数を定義する。
+	中にjump命令以外のNPCスクリプト命令を記述することができる。
+
+	・サンプル
+		<function name="nana.janken.init">
+			<ifndef varname="lyna.nana.win">
+				<set varname="lyna.nana.win" value="0"/>
+			</ifndef>
+			<ifndef varname="lyna.nana.lose">
+				<set varname="lyna.nana.lose" value="0"/>
+			</ifndef>
+			<ifndef varname="lyna.nana.draw">
+				<set varname="lyna.nana.draw" value="0"/>
+			</ifndef>
+		</function>
+
+	・属性詳細
+	[name]
+		関数名。
+
+【function->move】
+	キャラクターの位置を指定した座標に変更する。
+	function内でしか機能しない。
+
+	・サンプル
+		<move field="1" x="76" y="104"/>
+
+	・属性詳細
+	[field]
+		フィールドID。Field.txt参照。
+	[X]
+		フィールド内でのX座標。
+	[Y]
+		フィールド内でのY座標。

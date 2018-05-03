@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:404-HF200303 奇妙な旧校舎 1階 -->
+<field>
+
+	<warpgate id="2" x="6850" y="6149" shell="2" idCli="114" dir="0" idDestField="403" xDest="66" yDest="67"/>
+</field>

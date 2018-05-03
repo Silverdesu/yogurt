@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:390-HF100205 試練の部屋 -->
+<field>
+	<!-- 試練の部屋→世界樹の根の迷路 -->
+	<warpgate id="2" x="5000" y="1849" shell="9" idCli="45" dir="0" idDestField="388" xDest="6" yDest="4"/>
+</field>

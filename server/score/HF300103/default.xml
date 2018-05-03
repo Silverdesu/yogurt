@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:410-HF300103 地下水路入口 -->
+<field>
+
+	<warpgate id="2" x="2350" y="5949" shell="26" idCli="248" dir="0" idDestField="408" xDest="82" yDest="122"/>
+	<warpgate id="3" x="5250" y="5949" shell="26" idCli="519" dir="0" idDestField="409" xDest="18" yDest="124"/>
+	<warpgate id="5" x="3850" y="1349" shell="26" idCli="521" dir="0" idDestField="417" xDest="6" yDest="56"/>
+	<warpgate id="7" x="1150" y="3349" shell="26" idCli="523" dir="0" idDestField="411" xDest="65" yDest="97"/>
+</field>

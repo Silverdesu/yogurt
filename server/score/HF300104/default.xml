@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:411-HF300104 地下水路 分かれ道 -->
+<field>
+
+	<warpgate id="2" x="6550" y="9949" shell="15" idCli="306" dir="0" idDestField="410" xDest="13" yDest="33"/>
+	<warpgate id="3" x="6550" y="849" shell="15" idCli="322" dir="0" idDestField="412" xDest="54" yDest="72"/>
+</field>

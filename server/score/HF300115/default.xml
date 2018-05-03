@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:422-HF300115 煙幕水路 -->
+<field>
+
+	<warpgate id="2" x="5550" y="12149" shell="15" idCli="185" dir="0" idDestField="421" xDest="27" yDest="15"/>
+	<warpgate id="3" x="2450" y="2949" shell="15" idCli="186" dir="0" idDestField="423" xDest="67" yDest="77"/>
+</field>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:418-HF300111 サイクロコの部屋 -->
+<field>
+
+	<warpgate id="2" x="2850" y="3950" shell="21" idCli="81" dir="6" idDestField="417" xDest="60" yDest="16"/>
+</field>

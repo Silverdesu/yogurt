@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:416-HF300109 ごみ処理場 -->
+<field>
+
+	<warpgate id="2" x="5650" y="8249" shell="13" idCli="260" dir="0" idDestField="415" xDest="55" yDest="12"/>
+</field>

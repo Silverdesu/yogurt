@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:434-HF200405 地下墓地 秘密の門 -->
+<field>
+	<!-- 地下墓地 秘密の門→地下墓地 深層 -->
+	<warpgate id="2" x="1250" y="5049" shell="34" idCli="526" dir="0" idDestField="433" xDest="90" yDest="14"/>
+</field>

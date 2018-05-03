@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:408-HF300101 エスティバー地下水路 -->
+<field>
+
+	<warpgate id="2" x="1550" y="16999" shell="14" idCli="231" dir="0" idDestField="27" xDest="51" yDest="84"/>
+	<warpgate id="3" x="8250" y="12449" shell="14" idCli="232" dir="0" idDestField="410" xDest="23" yDest="57"/>
+</field>

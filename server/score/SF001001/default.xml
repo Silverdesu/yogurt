@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<field><!-- MapID:1 エスティバー 屋外 -->
+	<!-- 屋外→1F -->
+	<warpgate id="1" x="7590" y="11499" shell="78" idCli="818" dir="0" idDestField="2" xDest="66" yDest="103"/>
+	<!-- 屋外→バス停 -->
+	<warpgate id="2" x="7596" y="950" shell="78" idCli="819" dir="4" idDestField="27" xDest="80" yDest="81"/>
+	<!-- 屋外→裏庭 -->
+	<warpgate id="3" x="3550" y="12149" shell="78" idCli="820" dir="0" idDestField="26" xDest="27" yDest="45"/>
+	<!-- 屋外→購買 -->
+	<warpgate id="7" x="11700" y="4299" shell="78" idCli="565" dir="0" idDestField="339" xDest="17" yDest="31"/>
+	
+	<!-- エスティバーPVPEP -->
+<!--	<episodegate subid="10101" idCli="320" shell="82" x="35.4999694824219" y="45.4986953735352" dir="0" visible="1" usable="1">-->
+<!--		<episode id="62" grade="1"/>-->	<!-- 玉割り競争 -->
+<!--		<episode id="43" grade="2"/>-->	<!-- 働かざるもの飲むべからず -->
+<!--		<episode id="111" grade="3"/>-->	<!-- オマエの部屋はオレの部屋 -->
+<!--		<episode id="42" grade="3"/>-->	<!-- 食べるが勝ち！ -->
+<!--	</episodegate>-->
+	<!-- エスティバー1年生EP -->
+<!--	<episodegate subid="10001" idCli="543" shell="82" x="61.4999694824219" y="98.4986953735352" dir="0" visible="1" usable="1">-->
+<!--		<episode id="5" grade="1"/>-->		<!-- 廊下いっぱいの箱 -->
+<!--		<episode id="79" grade="1"/>-->	<!-- 廊下いっぱいの箱＠２階 -->
+<!--		<episode id="17" grade="1"/>-->	<!-- ゲトー大行進！ -->
+<!--		<episode id="6" grade="1"/>-->		<!-- ラッチュー撲滅作戦 -->
+<!--		<episode id="18" grade="1"/>-->	<!-- マルシュ・アタック！ -->
+<!--		<episode id="23" grade="1"/>-->	<!-- 羊たちの食欲 -->
+<!--		<episode id="15" grade="1"/>-->	<!-- 特命生徒会 -->
+<!--		<episode id="76" grade="1"/>-->	<!-- ペンギンマークの宅配便 -->
+<!--		<episode id="27" grade="1"/>-->	<!-- ジンギスカンの夕べ -->
+<!--		<episode id="63" grade="1"/>-->	<!-- ロボガスバクハツ -->
+<!--		<episode id="1" grade="1"/>-->		<!-- オズの魔法使い -->
+<!--		<episode id="64" grade="1"/>-->	<!-- 図書館の秘密 -->
+<!--	</episodegate>-->
+	<!-- ヘアドレッサー -->
+	<hairdresser subid="356" idCli="356" shell="84" x="118.049621582031" y="56.0001602172852" dir="4" visible="1" usable="1"/>
+</field>

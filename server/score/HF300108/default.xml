@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:415-HF300108 秘密の地下水路 -->
+<field>
+
+	<warpgate id="2" x="1350" y="6249" shell="19" idCli="337" dir="0" idDestField="414" xDest="97" yDest="56"/>
+	<warpgate id="3" x="5550" y="1049" shell="19" idCli="334" dir="0" idDestField="416" xDest="57" yDest="80"/>
+</field>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:414-HF300107 堂々巡りの地下水路 -->
+<field>
+
+	<warpgate id="2" x="2600" y="2999" shell="15" idCli="615" dir="0" idDestField="413" xDest="38" yDest="51"/>
+	<warpgate id="3" x="9750" y="5449" shell="15" idCli="573" dir="0" idDestField="415" xDest="15" yDest="62"/>
+</field>

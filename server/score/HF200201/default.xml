@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- 分かれ道 -->
+<field>
+	<!-- 分かれ道→聖堂 周辺 -->
+	<warpgate id="2" x="5800" y="1449" shell="44" idCli="2150" dir="0" idDestField="91" xDest="220" yDest="99"/>
+	<!-- 分かれ道→火葬場 -->
+	<warpgate id="3" x="2950" y="6449" shell="44" idCli="2151" dir="0" idDestField="400" xDest="58" yDest="26"/>
+	<!-- 分かれ道→納骨堂 -->
+	<warpgate id="5" x="9450" y="13199" shell="44" idCli="2152" dir="0" idDestField="401" xDest="54" yDest="56"/>
+	<!-- 分かれ道→グラウンド -->
+	<warpgate id="7" x="10650" y="7349" shell="44" idCli="1000" dir="0" idDestField="90" xDest="167" yDest="202"/>
+
+	<generator>
+		<!--
+			x, y: ジェネレータの位置(移動不可地点は指定できない)
+		-->
+		<point x="47" y="72"/>
+		<point x="54" y="104"/>
+		<point x="62" y="104"/>
+		<point x="63" y="35"/>
+		<point x="68" y="71"/>
+		<point x="79" y="94"/>
+		<point x="84" y="112"/>
+		<point x="87" y="75"/>
+		<point x="88" y="46"/>
+		
+		<!--
+			type: HuntMon.txtのtypeMonster
+			count: フィールド全体での数(1～100まで)
+			active: アクティブかどうか("1"か"true"で有効化、省略可能)
+			※フィールド全体で200体以下にすること
+		-->
+		<monster type="36" count="40" active="1">
+			<!--
+				抽選はdropタグ毎に行われる
+				つまり下記の例では最大で3つのドロップが発生する
+			-->
+			<drop>
+				<!--
+					type: xxItemType.txtのtype(一番左の列)の値
+					count: 入手個数(1～999まで。省略した場合1となる。beitemでは無視される)
+					rate: 入手率(1～1000まで)
+					※入手率はdropタグ内のアイテム数*1000を分母とした際の分子として計算
+					　例えばrateが50と100の2つのアイテムがあった場合、
+					　それぞれ50/2000、100/2000の確率として一緒に抽選が行われる(1850/2000がハズレ)
+				-->
+				<coitem type="71100" rate="100"/>
+				<coitem type="71101" rate="100"/>
+				<coitem type="71102" rate="100"/>
+				<coitem type="71103" rate="100"/>
+				<coitem type="71104" rate="100"/>
+			</drop>
+			<drop>
+				<beitem type="110001" rate="5"/>
+			</drop>
+			<drop>
+				<enitem type="1" rate="10"/>
+			</drop>
+		</monster>
+		<monster type="37" count="30" active="1">
+			<drop>
+				<coitem type="72100" rate="100"/>
+				<coitem type="72101" rate="100"/>
+				<coitem type="72102" rate="100"/>
+				<coitem type="72103" rate="100"/>
+				<coitem type="72104" rate="100"/>
+			</drop>
+			<drop>
+				<beitem type="120001" rate="5"/>
+			</drop>
+			<drop>
+				<enitem type="7" rate="10"/>
+			</drop>
+		</monster>
+		<monster type="45" count="20" active="1">
+			<drop>
+				<coitem type="73100" rate="100"/>
+				<coitem type="73101" rate="100"/>
+				<coitem type="73102" rate="100"/>
+				<coitem type="73103" rate="100"/>
+				<coitem type="73104" rate="100"/>
+				<coitem type="74100" rate="100"/>
+				<coitem type="74101" rate="100"/>
+				<coitem type="74102" rate="100"/>
+				<coitem type="74103" rate="100"/>
+				<coitem type="74104" rate="100"/>
+			</drop>
+			<drop>
+				<beitem type="130001" rate="10"/>
+				<beitem type="140001" rate="10"/>
+			</drop>
+			<drop>
+				<enitem type="13" rate="30"/>
+				<enitem type="19" rate="30"/>
+				<enitem type="25" rate="30"/>
+			</drop>
+		</monster>
+	</generator>
+</field>

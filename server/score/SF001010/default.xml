@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:339 エスティバー 購買 -->
+<field>
+	<!-- 購買→屋外 -->
+	<warpgate id="2" x="1450" y="3149" shell="78" idCli="180" dir="0" idDestField="1" xDest="115" yDest="42"/>
+	
+	<!-- ガチャ -->
+	<!-- 未実装の為コメントアウト
+	<locker subid="101" idCli="142" shell="87" x="28.5" y="17.7000007629395" dir="0" visible="1" usable="1"/>
+	<locker subid="102" idCli="81" shell="87" x="27.5" y="17.7000007629395" dir="0" visible="1" usable="1"/>
+	<locker subid="103" idCli="141" shell="87" x="26.5" y="17.7000007629395" dir="0" visible="1" usable="1"/>
+	<locker subid="104" idCli="143" shell="87" x="25.5" y="17.7000007629395" dir="0" visible="1" usable="1"/>
+	<locker subid="105" idCli="144" shell="87" x="24.5" y="17.7000007629395" dir="0" visible="1" usable="1"/>
+	<locker subid="106" idCli="151" shell="87" x="29.5" y="17.6999988555908" dir="0" visible="1" usable="1"/>
+	-->
+	
+	<!-- ロッカー -->
+	<locker subid="137" idCli="137" shell="86" x="35.4970016479492" y="18.5" dir="6" visible="1" usable="1"/>
+	<locker subid="138" idCli="138" shell="86" x="35.4970016479492" y="19.5" dir="6" visible="1" usable="1"/>
+	<locker subid="139" idCli="139" shell="86" x="35.4970016479492" y="20.5" dir="6" visible="1" usable="1"/>
+	<locker subid="127" idCli="127" shell="86" x="38.4970016479492" y="18.5" dir="6" visible="1" usable="1"/>
+	<locker subid="132" idCli="132" shell="86" x="38.4970016479492" y="19.5" dir="6" visible="1" usable="1"/>
+	<locker subid="133" idCli="133" shell="86" x="38.4970016479492" y="20.5" dir="6" visible="1" usable="1"/>
+	<locker subid="134" idCli="134" shell="86" x="41.6970100402832" y="20.5" dir="6" visible="1" usable="1"/>
+	<locker subid="135" idCli="135" shell="86" x="41.6970100402832" y="19.5" dir="6" visible="1" usable="1"/>
+	<locker subid="136" idCli="136" shell="86" x="41.6970100402832" y="18.5" dir="6" visible="1" usable="1"/>
+</field>

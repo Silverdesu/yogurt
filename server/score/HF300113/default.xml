@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:420-HF300113 開かずの水路 -->
+<field>
+
+	<warpgate id="2" x="1650" y="9349" shell="15" idCli="450" dir="0" idDestField="419" xDest="99" yDest="171"/>
+</field>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:423-HF300116 危ない地下水路 -->
+<field>
+
+	<warpgate id="2" x="6700" y="7949" shell="6" idCli="273" dir="0" idDestField="422" xDest="26" yDest="29"/>
+</field>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:430-HF200401 聖堂地下倉庫 -->
+<field>
+	<!-- 聖堂地下倉庫→聖堂 -->
+	<warpgate id="2" x="3150" y="449" shell="39" idCli="285" dir="0" idDestField="424" xDest="36" yDest="76"/>
+	<!-- 聖堂地下倉庫→地下墓地 入口 -->
+	<warpgate id="3" x="3250" y="5249" shell="39" idCli="287" dir="0" idDestField="431" xDest="8" yDest="8"/>
+</field>

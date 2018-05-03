@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:397-HF100306 オオカミの森 -->
+<field>
+	<!-- オオカミの森→災厄の森 -->
+	<warpgate id="2" x="6050" y="6649" shell="32" idCli="616" dir="0" idDestField="396" xDest="74" yDest="74"/>
+</field>

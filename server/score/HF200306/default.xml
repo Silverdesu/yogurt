@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:407-HF200306 暗黒の回廊 -->
+<field>
+
+	<warpgate id="2" x="550" y="4599" shell="78" idCli="274" dir="0" idDestField="406" xDest="64" yDest="39"/>
+</field>

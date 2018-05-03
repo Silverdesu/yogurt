@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:421-HF300114 暗黒の水路 -->
+<field>
+
+	<warpgate id="2" x="2050" y="6349" shell="6" idCli="55" dir="0" idDestField="419" xDest="96" yDest="121"/>
+	<warpgate id="3" x="2550" y="1549" shell="6" idCli="145" dir="0" idDestField="422" xDest="55" yDest="119"/>
+</field>

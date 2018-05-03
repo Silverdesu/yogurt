@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:386-HF100201 ドロシーの部屋 -->
+<field>
+	<!-- ドロシーの部屋→1F -->
+	<warpgate id="2" x="3950" y="1149" shell="11" idCli="276" dir="0" idDestField="2" xDest="27" yDest="101"/>
+	<!-- ドロシーの部屋→図書館 秘密通路 -->
+	<warpgate id="3" x="3950" y="6849" shell="11" idCli="277" dir="0" idDestField="387" xDest="22" yDest="23"/>
+</field>

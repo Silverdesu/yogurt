@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:395-HF100304 ハイバラウスの森 -->
+<field>
+	<!-- ハイバラウスの森→ミュータントフラワー -->
+	<warpgate id="2" x="13550" y="5749" shell="38" idCli="347" dir="0" idDestField="394" xDest="27" yDest="65"/>
+</field>

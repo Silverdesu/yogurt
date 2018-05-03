@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:400-HF200202 火葬場 -->
+<field>
+	<!-- 火葬場→分かれ道 -->
+	<warpgate id="2" x="5950" y="2449" shell="43" idCli="2142" dir="0" idDestField="399" xDest="32" yDest="64"/>
+</field>

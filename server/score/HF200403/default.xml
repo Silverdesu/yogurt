@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:432-HF200403 地下墓地 -->
+<field>
+	<!-- 地下墓地→地下墓地 入口 -->
+	<warpgate id="2" x="800" y="9149" shell="28" idCli="432" dir="0" idDestField="431" xDest="93" yDest="8"/>
+	<!-- 地下墓地→地下墓地 深層 -->
+	<warpgate id="3" x="9550" y="699" shell="28" idCli="434" dir="0" idDestField="433" xDest="15" yDest="8"/>
+</field>

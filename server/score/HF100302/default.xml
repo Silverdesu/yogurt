@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:393-HF100302 中心部に続く道 -->
+<field>
+	<!-- 中心部に続く道→温室入口 -->
+	<warpgate id="2" x="7550" y="2649" shell="42" idCli="318" dir="0" idDestField="392" xDest="68" yDest="90"/>
+	<!-- 中心部に続く道→ミュータントフラワー -->
+	<warpgate id="3" x="8050" y="14049" shell="42" idCli="36" dir="0" idDestField="394" xDest="55" yDest="35"/>
+</field>

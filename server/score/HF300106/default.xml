@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:413-HF300106 カタツムリの水路 -->
+<field>
+
+	<warpgate id="2" x="9050" y="13299" shell="15" idCli="423" dir="0" idDestField="412" xDest="68" yDest="12"/>
+	<warpgate id="3" x="3850" y="5349" shell="15" idCli="458" dir="0" idDestField="414" xDest="28" yDest="29"/>
+</field>

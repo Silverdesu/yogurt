@@ -1,0 +1,288 @@
+/*******************************************************************************
+
+【パケット別・通信の簡単な流れ】
+
+■クライアントからの認証手順(C=クライアント S=サーバ ->は送信方向を示す)
+1.[C->S] MSG_SYS_ADMIN_AUTH_REQ送信
+2.[S->C] MSG_SYS_ADMIN_AUTH_ANS受信
+├resultがRC_FAILの場合
+│=>認証に失敗、1に戻る
+└resultがRC_SUCCEEDの場合
+　=>次へ進む
+
+■アカウントリスト要求
+1.認証をしていない場合は済ませる
+2.[C->S] MSG_SYS_ACCOUNT_LIST_REQを送信
+3.[S->C] MSG_SYS_ACCOUNT_LIST_ANSを受信
+├resultがRC_SYS_AUTH_REQUIREDの場合
+│=>未認証、1に戻る
+└resultがRC_SUCCEEDの場合
+　=>アカウントリスト取得成功
+　├bLastが0
+　│=>アカウントが50件より多くあるので3に戻る
+　└bLastが1
+　　=>最終データ
+
+■アカウント作成要求
+1.認証をしていない場合は済ませる
+2.[C->S] MSG_SYS_ACCOUNT_MAKE_REQを送信
+3.[S->C] MSG_SYS_ACCOUNT_MAKE_ANSを受信
+├resultがRC_SYS_AUTH_REQUIREDの場合
+│=>未認証、1に戻る
+├resultがRC_SYS_INVALID_ACCOUNTIDの場合
+│=>使用できないアカウントID、2に戻る
+└resultがRC_SUCCEEDの場合
+　=>アカウント作成成功
+
+■アカウント削除要求
+1.認証をしていない場合は済ませる
+2.[C->S] MSG_SYS_ACCOUNT_DELETE_REQを送信
+3.[S->C] MSG_SYS_ACCOUNT_DELETE_ANSを受信
+├resultがRC_SYS_AUTH_REQUIREDの場合
+│=>未認証、1に戻る
+├resultがRC_SYS_INVALID_ACCOUNTIDの場合
+│=>存在しないアカウントID、2に戻る
+└resultがRC_SUCCEEDの場合
+　=>アカウント削除成功
+
+■アカウント情報要求
+1.認証をしていない場合は済ませる
+2.[C->S] MSG_SYS_ACCOUNT_INFO_REQを送信
+3.[S->C] MSG_SYS_ACCOUNT_INFO_ANSを受信
+├resultがRC_SYS_AUTH_REQUIREDの場合
+│=>未認証、1に戻る
+├resultがRC_SYS_INVALID_ACCOUNTIDの場合
+│=>存在しないアカウントID、2に戻る
+└resultがRC_SUCCEEDの場合
+　=>アカウント情報取得成功
+
+■アカウント情報変更要求
+1.認証をしていない場合は済ませる
+2.[C->S] MSG_SYS_ACCOUNT_CHANGE_REQを送信
+3.[S->C] MSG_SYS_ACCOUNT_CHANGE_ANSを受信
+├resultがRC_SYS_AUTH_REQUIREDの場合
+│=>未認証、1に戻る
+├resultがRC_SYS_INVALID_ACCOUNTIDの場合
+│=>存在しないアカウントID、2に戻る
+├resultがRC_SYS_NO_CHARの場合
+│=>キャラクター未作成のため名称変更不可
+├resultがRC_SYS_INVALID_CHARNAMEの場合
+│=>使用できないキャラクター名、2に戻る
+└resultがRC_SUCCEEDの場合
+　=>アカウント情報変更成功
+
+■アクティブプレイヤー数要求
+1.認証をしていない場合は済ませる
+2.[C->S] MSG_SYS_PLAYERCOUNT_REQを送信
+3.[S->C] MSG_SYS_PLAYERCOUNT_ANSを受信
+├resultがRC_SYS_AUTH_REQUIREDの場合
+│=>未認証、1に戻る
+└resultがRC_SUCCEEDの場合
+　=>アクティブプレイヤー数取得成功
+
+■アナウンス通知
+1.認証をしていない場合は済ませる
+2.[C->S] MSG_SYS_ANNOUNCE_NTFを送信
+3.返答パケットは無し(クライアント上で確認)
+
+■ハートビート通知
+1.認証をしていない場合は済ませる
+2.[C->S] MSG_SYS_ECHO_NTFを送信
+3.[S->C] MSG_SYS_ECHO_NTFを受信
+
+【備考】
+
+・MSG_SYS_ADMIN_AUTH_REQのenablePushNotificationを有効にした場合、
+　セッションが続く限り各アカウントの状態が変更された際にサーバ側から自動で通知される。
+　CGIなどの短期利用で通知が必要ない場合はFalseを指定する。
+　(ただしプッシュ通知自体は現在未実装)
+・接続先ポートはサーバの設定(iniのAdminPort)による。
+・データは全てリトルエンディアンで処理する。
+・認証していない状態でMSG_SYS_ADMIN_AUTH_REQ以外のパケットを送ると、
+　各返答パケのresultとしてRC_SYS_AUTH_REQUIREDが返される。
+　その後に続くデータは未定義、もしくは存在しない可能性があるため、
+　パケットを全て読み込む前にresult値をチェックする。
+・ハートビート通知はいわゆる「Keep Alive」用であり、
+　CGIのように短時間内にセッションが終了する用途の場合は必要ない。
+・MSG_SYS_ACCOUNT_CHANGE_REQでdeniedをtrue、あるいはloginをfalseにした場合、
+　該当キャラクターがログイン中であれば切断される。
+・現在の仕様ではサーバ側から切断することはないため、
+　クライアントアプリケーション側の責任で切断する。
+　ただし将来的には最後の通信よりn分(任意)で切断する予定。
+・MSG_SYS_ACCOUNT_LIST_ANSは50件毎に区切って複数のパケットで届く。
+
+*******************************************************************************/
+
+/* パケットID */
+
+const MSG_SYS_ADMIN_AUTH_REQ = 10001; /* 管理者認証要求 */
+const MSG_SYS_ADMIN_AUTH_ANS = 10002; /* 管理者認証返答 */
+
+const MSG_SYS_ACCOUNT_LIST_REQ = 10011; /* アカウントリスト要求 */
+const MSG_SYS_ACCOUNT_LIST_ANS = 10012; /* アカウントリスト返答 */
+
+const MSG_SYS_ACCOUNT_MAKE_REQ   = 10021; /* アカウント作成要求 */
+const MSG_SYS_ACCOUNT_MAKE_ANS   = 10022; /* アカウント作成返答 */
+const MSG_SYS_ACCOUNT_DELETE_REQ = 10031; /* アカウント削除要求 */
+const MSG_SYS_ACCOUNT_DELETE_ANS = 10032; /* アカウント削除返答 */
+const MSG_SYS_ACCOUNT_INFO_REQ   = 10041; /* アカウント情報要求 */
+const MSG_SYS_ACCOUNT_INFO_ANS   = 10042; /* アカウント情報返答 */
+const MSG_SYS_ACCOUNT_CHANGE_REQ = 10051; /* アカウント情報変更要求 */
+const MSG_SYS_ACCOUNT_CHANGE_ANS = 10052; /* アカウント情報変更返答 */
+
+const MSG_SYS_PLAYERCOUNT_REQ = 12001; /* プレイヤー数要求 */
+const MSG_SYS_PLAYERCOUNT_ANS = 12002; /* プレイヤー数返答 */
+const MSG_SYS_PLAYERCOUNT_NTF = 12003; /* プレイヤー数通知 */
+
+const MSG_SYS_ANNOUNCE_NTF = 12011; /* アナウンス通知 */
+
+const MSG_SYS_ECHO_NTF = 19001; /* ハートビート */
+
+/* RC定数 */
+
+const RC_FAIL    = 0; /* 失敗 */
+const RC_SUCCEED = 1; /* 成功 */
+
+const RC_SYS_AUTH_REQUIRED     = 1000; /* 認証が必要 */
+const RC_SYS_INVALID_ACCOUNTID = 1001; /* 無効なアカウントID */
+const RC_SYS_INVALID_CHARNAME  = 1002; /* 無効なキャラクター名 */
+const RC_SYS_TOOLONG_CHARNAME  = 1003; /* キャラクター名が長すぎる */
+const RC_SYS_DUP_CHARNAME      = 1004; /* キャラクター名が重複 */
+const RC_SYS_NO_CHAR           = 1005; /* キャラクターが未作成 */
+
+/* ACCOUNT_INFO用フラグ */
+
+const AI_PASSWORD = 1;
+const AI_CHARNAME = 2;
+const AI_DENIED   = 4;
+const AI_AUTHTYPE = 8;
+const AI_LOGIN    = 16;
+const AI_FIELD    = 32;
+const AI_ALL = AI_PASSWORD | AI_CHARNAME | AI_DENIED | AI_AUTHTYPE | AI_LOGIN | AI_FIELD;
+
+/* その他の定数 */
+
+const LENGTH_ACCOUNTID  = 25; /* アカウント名の最大長(文字数) */
+const LENGTH_CHARNAME   = 13; /* キャラクター名の最大長(文字数) */
+const BLENGTH_ACCOUNTID = 50; /* アカウント名の最大長(バイト数) */
+const BLENGTH_PASSWORD  = 34; /* パスワードの最大長(バイト数) */
+const BLENGTH_CHARNAME  = 26; /* キャラクター名の最大長(バイト数) */
+
+/******************************************************************************/
+
+/* 共通構造体 */
+
+struct PACKET_HEADER {
+  int32 dataLength; /* ヘッダを除いたパケット全体の長さ */
+  int16 packetId;   /* パケットID(admin_const.txt参照) */
+}
+
+struct ACCOUNT_INFO {
+  wchar accountId[LENGTH_ACCOUNTID]; /* アカウントID(UTF-16LE, 最後はヌル文字) */
+  uint32 flag;                       /* 後続データを示すビットフラグ */
+
+  /* これ以降の存在はflagによる */
+
+  /* (flag & AI_PASSWORD) != 0 であれば存在 */
+  char password[BLENGTH_PASSWORD]; /* パスワードのMD5ハッシュ値(ASCII, ラスト「2バイト」はヌル文字) */
+
+  /* (flag & AI_CHARNAME) != 0 であれば存在 */
+  wchar charName[LENGTH_CHARNAME]; /* キャラクター名(UTF-16LE, 最後はヌル文字) */
+
+  /* (flag & AI_DENIED) != 0 であれば存在 */
+  uint8 denied; /* ログイン拒否(bool値, 0=false それ以外=true) */
+
+  /* (flag & AI_AUTHTYPE) != 0 であれば存在 */
+  uint8 authType; /* 認証タイプ(0=none 1=navi 2=gm) */
+
+  /* (flag & AI_LOGIN) != 0 であれば存在 */
+  uint8 login; /* ログイン中(bool値, 0=false それ以外=true) */
+
+  /* (flag & AI_FIELD) != 0 であれば存在 */
+  int32 field; /* フィールドID(Field.txtのID) */
+　uint16 x;    /* X座標 */
+　uint16 y;    /* Y座標 */
+}
+
+/* パケット本体 */
+
+struct MSG_SYS_ADMIN_AUTH_REQ {
+  uint16 passwordLength;          /* パスワードの長さ(バイト換算) */
+  wchar password[passwordLength]; /* パスワード(UTF-16LE, 最後はヌル文字) */
+  uint8 enablePushNotification;   /* プッシュ通知(bool値, 0=false それ以外=true) */
+}
+
+struct MSG_SYS_ADMIN_AUTH_ANS {
+  int32 result; /* RC定数 */
+}
+
+struct MSG_SYS_ACCOUNT_LIST_REQ {
+  /* 本体部なし */
+}
+
+struct MSG_SYS_ACCOUNT_LIST_ANS {
+  int32 result; /* RC定数 */
+  int32 bLast;  /* 0=後続データあり 1=最終データ */
+  int32 count;  /* アカウント数 */
+  wchar accounts[count][LENGTH_ACCOUNTID]; /* アカウントID(UTF-16LE, 最後はヌル文字) */
+}
+
+struct MSG_SYS_ACCOUNT_MAKE_REQ {
+  wchar accountId[LENGTH_ACCOUNTID]; /* アカウントID(UTF-16LE, 最後はヌル文字) */
+  char password[BLENGTH_PASSWORD];   /* パスワードのMD5ハッシュ値(ASCII, ラスト「2バイト」はヌル文字) */
+}
+
+struct MSG_SYS_ACCOUNT_MAKE_ANS {
+  int32 result; /* RC定数 */
+  wchar accountId[LENGTH_ACCOUNTID]; /* アカウントID(UTF-16LE, 最後はヌル文字) */
+}
+
+struct MSG_SYS_ACCOUNT_DELETE_REQ {
+  wchar accountId[LENGTH_ACCOUNTID]; /* アカウントID(UTF-16LE, 最後はヌル文字) */
+}
+
+struct MSG_SYS_ACCOUNT_DELETE_ANS {
+  int32 result; /* RC定数 */
+  wchar accountId[LENGTH_ACCOUNTID]; /* アカウントID(UTF-16LE, 最後はヌル文字) */
+}
+
+struct MSG_SYS_ACCOUNT_INFO_REQ {
+  wchar accountId[LENGTH_ACCOUNTID]; /* アカウントID(UTF-16LE, 最後はヌル文字) */
+  int32 flag;                        /* 要求するデータを示すビットフラグ(AI_XXXX) */
+}
+
+struct MSG_SYS_ACCOUNT_INFO_ANS {
+  int32 result; /* RC定数 */
+  ACCOUNT_INFO accountInfo; /* アカウント情報 */
+}
+
+struct MSG_SYS_ACCOUNT_CHANGE_REQ {
+  ACCOUNT_INFO accountInfo; /* アカウント情報 */
+}
+
+struct MSG_SYS_ACCOUNT_CHANGE_ANS {
+  int32 result; /* RC定数 */
+  ACCOUNT_INFO accountInfo; /* アカウント情報 */
+}
+
+struct MSG_SYS_PLAYERCOUNT_REQ {
+  /* 本体部なし */
+}
+
+struct MSG_SYS_PLAYERCOUNT_ANS {
+  int32 result; /* RC定数 */
+  int32 player; /* アクティブプレイヤー数 */
+}
+
+struct MSG_SYS_PLAYERCOUNT_NTF {
+  int32 player; /* アクティブプレイヤー数 */
+}
+
+struct MSG_SYS_ANNOUNCE_NTF {
+  int16 len;      /* メッセージ長(バイト換算) */
+  wchar msg[len]; /* メッセージ(UTF-16LE, 最後はヌル文字) */
+}
+
+struct MSG_SYS_ECHO_NTF {
+  /* 本体部なし */
+}

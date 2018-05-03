@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!-- MapID:388-HF100203 世界樹の根の迷路 -->
+<field>
+	<!-- 世界樹の根の迷路→図書館 秘密通路 -->
+	<warpgate id="2" x="6250" y="6449" shell="8" idCli="255" dir="0" idDestField="387" xDest="14" yDest="63"/>
+	<!-- 世界樹の根の迷路→メカドロシーの部屋 -->
+	<warpgate id="3" x="3550" y="549" shell="8" idCli="311" dir="0" idDestField="389" xDest="45" yDest="9"/>
+	<!-- 世界樹の根の迷路→試練の部屋 -->
+	<warpgate id="5" x="450" y="449" shell="8" idCli="380" dir="0" idDestField="390" xDest="50" yDest="20"/>
+	<!-- 世界樹の根の迷路→ほこりだらけの図書館 -->
+	<warpgate id="7" x="2350" y="6349" shell="8" idCli="425" dir="0" idDestField="391" xDest="47" yDest="10"/>
+</field>

@@ -1,0 +1,17 @@
+3DDRIVER
+{
+CLASSID "LuCGate3D3"
+LIBNAME "LuGate3D3"
+DESCRIB "3D Engine"
+DEPENDE ""
+VERSION "1"
+}
+
+GAMEENGINE
+{
+CLASSID "LuCGameEngine"
+LIBNAME "LuGameEngineDX9"
+DESCRIB "Lussiard GameEngine for DirectX"
+DEPENDE ""
+VERSION "1"
+}
